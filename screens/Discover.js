@@ -1,10 +1,26 @@
-import { View, Text, SafeAreaView, Image } from "react-native";
-import React, { useLayoutEffect } from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import React, { useLayoutEffect, useState } from "react";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useNavigation } from "@react-navigation/native";
-import { Avatar } from "../assets";
+import { Avatar, Hotels, Attractions, Restaurants } from "../assets";
+import MenuContainer from "../components/MenuContainer";
+
+import { FontAwesome } from "@expo/vector-icons";
+import ItemCartContainer from "../components/ItemCartContainer";
 
 const Discover = () => {
   const navigation = useNavigation();
+  const [type, setType] = useState("restaurants");
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -27,6 +43,82 @@ const Discover = () => {
           />
         </View>
       </View>
+      <View className="flex-row items-center bg-white mx-4 py-1 rounded-xl px-4 shadow-lg mt-4">
+        <GooglePlacesAutocomplete
+          GooglePlacesDetailsQuery={{ fields: "geometry" }}
+          placeholder="Search"
+          fetchDetails={true}
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            console.log(details?.geometry?.viewport);
+          }}
+          query={{
+            key: "AIzaSyBDOYf_TMcvLRi3Qgb1YTWdUyobzYlqvfI",
+            language: "en",
+          }}
+        />
+      </View>
+      {isLoading ? (
+        <View className="flex-1 items-center justify-center">
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      ) : (
+        <ScrollView>
+          <View className="flex-row items-center justify-between px-8 mt-8 ">
+            <MenuContainer
+              key={"hotel"}
+              title="Hotels"
+              ImageSrc={Hotels}
+              type={type}
+              setType={setType}
+            />
+            <MenuContainer
+              key={"attractions"}
+              title="Attractions"
+              ImageSrc={Attractions}
+              type={type}
+              setType={setType}
+            />
+            <MenuContainer
+              key={"restaurants"}
+              title="Restaurants"
+              ImageSrc={Restaurants}
+              type={type}
+              setType={setType}
+            />
+          </View>
+          <View className="flex-row items-center justify-between px-4 mt-8">
+            <Text className="text-green-500 text-[28px] font-bold">
+              Top Tips
+            </Text>
+            <TouchableOpacity className="flex-row items-center justify-center space-x-2">
+              <Text className="text-emerald-400 text-[28px] font-bold">
+                Explore
+              </Text>
+              <FontAwesome name="long-arrow-right" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+
+          <View className="px-4 mt- flex-row items-center justify-evenly flex-wrap">
+            <ItemCartContainer
+              key={"101"}
+              imageSrc={
+                "https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_640.jpg"
+              }
+              title="Something "
+              location="Doha"
+            />
+            <ItemCartContainer
+              key={"102"}
+              imageSrc={
+                "https://cdn.pixabay.com/photo/2023/08/17/05/37/brown-pelican-8195511_640.jpg"
+              }
+              title="Something"
+              location="Qatar"
+            />
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
