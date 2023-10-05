@@ -53,7 +53,7 @@ const Discover = () => {
             console.log(details?.geometry?.viewport);
           }}
           query={{
-            key: "AIzaSyBDOYf_TMcvLRi3Qgb1YTWdUyobzYlqvfI",
+            key: "",
             language: "en",
           }}
         />
