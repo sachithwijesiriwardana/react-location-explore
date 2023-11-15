@@ -101,7 +101,7 @@ const Discover = () => {
           </View>
 
           <View className="px-4 mt- flex-row items-center justify-evenly flex-wrap">
-       
+       {mainData.length >0 ?<></> : <></>}
           </View>
         </ScrollView>
       )}
