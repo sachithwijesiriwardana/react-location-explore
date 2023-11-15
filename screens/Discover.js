@@ -21,6 +21,7 @@ const Discover = () => {
   const [type, setType] = useState("restaurants");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [mainData, setmainData] = useState([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -100,22 +101,7 @@ const Discover = () => {
           </View>
 
           <View className="px-4 mt- flex-row items-center justify-evenly flex-wrap">
-            <ItemCartContainer
-              key={"101"}
-              imageSrc={
-                "https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_640.jpg"
-              }
-              title="Something "
-              location="Doha"
-            />
-            <ItemCartContainer
-              key={"102"}
-              imageSrc={
-                "https://cdn.pixabay.com/photo/2023/08/17/05/37/brown-pelican-8195511_640.jpg"
-              }
-              title="Something"
-              location="Qatar"
-            />
+       
           </View>
         </ScrollView>
       )}
